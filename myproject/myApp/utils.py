@@ -2,7 +2,7 @@ import os
 import re
 import pandas as pd
 from openpyxl import Workbook
-from openpyxl.styles import PatternFill, Font, Alignment
+from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 from django.conf import settings
 
 def detect_header_row(file_path, expected_headers, max_rows=20):
@@ -69,6 +69,17 @@ def generate_output(file1_path, file2_path, file):
     header_fill = PatternFill(start_color='FFC000', end_color='FFC000', fill_type='solid')
     bold_font = Font(bold=True)
     center_align = Alignment(horizontal="center")
+    
+    # Border styles
+    thin_border = Border(left=Side(style='thin'), 
+                        right=Side(style='thin'), 
+                        top=Side(style='thin'), 
+                        bottom=Side(style='thin'))
+    
+    thick_border = Border(left=Side(style='medium'), 
+                         right=Side(style='medium'), 
+                         top=Side(style='medium'), 
+                         bottom=Side(style='medium'))
 
     # Get just the week numbers (KW)
     kw1 = file.date1.isocalendar()[1]
@@ -92,11 +103,30 @@ def generate_output(file1_path, file2_path, file):
                "Component (X-N)", "Customer Part (X-N)", "Quantity (X-N)", "Description (X-N)"]
     ws.append(headers)
 
-    for col in range(1, 10):
-        cell = ws.cell(row=2, column=col)
-        cell.font = bold_font
-        cell.alignment = center_align
-        cell.fill = gray_fill if col == 5 else header_fill
+    # Apply thick borders to header rows
+    for row_num in [1, 2]:
+        for col in range(1, 10):
+            cell = ws.cell(row=row_num, column=col)
+            cell.font = bold_font
+            cell.alignment = center_align
+            cell.fill = gray_fill if col == 5 else header_fill
+            cell.border = thick_border
+
+    # Set column widths
+    column_widths = {
+        1: 20,  # Component (X)
+        2: 20,  # Customer Part (X)
+        3: 15,  # Quantity (X)
+        4: 40,  # Description (X)
+        5: 5,   # Separator
+        6: 20,  # Component (X-N)
+        7: 20,  # Customer Part (X-N)
+        8: 15,  # Quantity (X-N)
+        9: 40   # Description (X-N)
+    }
+    
+    for col, width in column_widths.items():
+        ws.column_dimensions[chr(64 + col)].width = width
 
     # Compare data
     row_index = 3
@@ -138,6 +168,11 @@ def generate_output(file1_path, file2_path, file):
                 ws.cell(row=row_index, column=9).fill = orange_fill  # Description (X-N)
 
         row_index += 1
+
+    # Add thin borders to all data cells
+    for row in ws.iter_rows(min_row=3):  # Start from data rows
+        for cell in row:
+            cell.border = thin_border
 
     # Save
     output_filename = f"Comparison_Sitz_Rechts_VE_from_KW{kw1}_to_KW{kw2}.xlsx"
