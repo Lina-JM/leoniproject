@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Uploaded Files</title>
+    <link rel="stylesheet" href="{% static 'myApp/css/update.css' %}">
+</head>
+<body>
+<div class="container">
+    <h2>Update Files for ID {{ file.id }}</h2>
+
+    <!-- Django messages (success/error) -->
+    {% if messages %}
+    <div class="message-container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main error message container -->
+    {% if error %}
+    <div id="error-message" class="error-message {% if error_type %}{{ error_type }}{% endif %}" style="display: block;">
+        {{ error|safe }}
+    </div>
+    {% endif %}
+
+    <form id="update-form" method="post" enctype="multipart/form-data" action="{% url 'update_upload' file.id %}">
+        {% csrf_token %}
+
+        <!-- File 1 Section -->
+        <div class="form-section">
+            <label for="file1"><strong>Update BOOM(X) (optional):</strong></label>
+            <div class="current-value">
+                Current: {% if file.file1 %}{{ file.file1.name }}{% else %}None{% endif %}
+            </div>
+            <input type="file" name="file1" id="file1" accept=".xlsx,.xls" onchange="validateExcelFile(this, 'BOOM(X)')">
+            <div class="file-error" id="file1-error"></div>
+        </div>
+
+        <!-- Date 1 Section -->
+        <div class="form-section">
+            <label for="date1"><strong>Update KW(X) (optional):</strong></label>
+            <div class="current-value">
+                Current: {% if file.date1 %}KW {{ file.date1.isocalendar.1 }}{% else %}Not set{% endif %}
+            </div>
+            <input type="week" 
+                   name="date1" 
+                   id="date1" 
+                   value="{{ date1_initial|default_if_none:'' }}" 
+                   class="form-control"
+                   min="2020-W01"
+                   max="2030-W52">
+        </div>
+
+        <!-- File 2 Section -->
+        <div class="form-section">
+            <label for="file2"><strong>Update BOOM(X-N) (optional):</strong></label>
+            <div class="current-value">
+                Current: {% if file.file2 %}{{ file.file2.name }}{% else %}None{% endif %}
+            </div>
+            <input type="file" name="file2" id="file2" accept=".xlsx,.xls" onchange="validateExcelFile(this, 'BOOM(X-N)')">
+            <div class="file-error" id="file2-error"></div>
+        </div>
+
+        <!-- Date 2 Section -->
+        <div class="form-section">
+            <label for="date2"><strong>Update KW(X-N) (optional):</strong></label>
+            <div class="current-value">
+                Current: {% if file.date2 %}KW {{ file.date2.isocalendar.1 }}{% else %}Not set{% endif %}
+            </div>
+            <input type="week" 
+                   name="date2" 
+                   id="date2" 
+                   value="{{ date2_initial|default_if_none:'' }}" 
+                   class="form-control"
+                   min="2020-W01"
+                   max="2030-W52">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Update</button>
+            <a href="{% url 'upload_tables' %}" class="cancel-button">Cancel</a>
+        </div>
+    </form>
+</div>
+<script src="{% static 'myApp/js/script.js' %}"></script>
+<script>
+    // Client-side validation to match index.html behavior
+    function validateExcelFile(input, fieldName) {
+        const errorDiv = document.getElementById(`${input.id}-error`);
+        const file = input.files[0];
+        
+        if (file) {
+            if (!file.name.match(/\.(xls|xlsx)$/i)) {
+                errorDiv.innerHTML = `<span style="color:red">${fieldName} must be an Excel file (.xls or .xlsx)</span>`;
+                errorDiv.style.display = 'block';
+                input.value = ''; // Clear the invalid file
+            } else {
+                errorDiv.style.display = 'none';
+            }
+        }
+    }
+
+    // Form submission validation
+    document.getElementById('update-form')?.addEventListener('submit', function(e) {
+        const file1 = document.getElementById('file1').files[0];
+        const file2 = document.getElementById('file2').files[0];
+        const file1Error = document.getElementById('file1-error');
+        const file2Error = document.getElementById('file2-error');
+        
+        // Clear previous errors
+        file1Error.style.display = 'none';
+        file2Error.style.display = 'none';
+        
+        // Validate file types
+        let isValid = true;
+        
+        if (file1 && !file1.name.match(/\.(xls|xlsx)$/i)) {
+            file1Error.innerHTML = '<span style="color:red">BOOM(X) must be an Excel file (.xls or .xlsx)</span>';
+            file1Error.style.display = 'block';
+            isValid = false;
+        }
+        
+        if (file2 && !file2.name.match(/\.(xls|xlsx)$/i)) {
+            file2Error.innerHTML = '<span style="color:red">BOOM(X-N) must be an Excel file (.xls or .xlsx)</span>';
+            file2Error.style.display = 'block';
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>

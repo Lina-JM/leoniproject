@@ -1,0 +1,162 @@
+/* static/myApp/css/upload_tables.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 30px;
+    margin: 0;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    overflow-x: auto; /* Add scroll if table is too wide */
+}
+
+/* Title */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    min-width: 600px; /* Ensures structure on small screens */
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Button-like links */
+a.button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    display: inline-block;
+}
+
+a.button:hover {
+    background-color: #0056b3;
+}
+
+/* Info tooltip styling */
+.info-icon {
+    position: relative;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    background-color: #3498db;
+    border-radius: 50%;
+    padding: 0.25em 0.5em;
+    display: inline-block;
+}
+
+.info-icon::after {
+    content: attr(data-message);
+    position: absolute;
+    bottom: 125%; /* Show above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    white-space: normal; 
+    width: max-content;
+    max-width: 250px; 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.info-icon:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+table td:first-child a {
+    text-decoration: none;
+}
+
+/* Add to your upload_tables.css */
+.messages .alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+.messages .alert-success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+.messages .alert-error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+/* Responsive behavior */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    a.button {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        min-width: unset;
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 6px 4px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+}

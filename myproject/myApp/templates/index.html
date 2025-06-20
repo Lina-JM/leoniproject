@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Excel Files</title>
+  <link rel="stylesheet" href="{% static 'myApp/css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Compare Excel Files</h2>
+    
+    <!-- Django messages (success/error) -->
+    {% if messages %}
+    <div class="message-container">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main error message container -->
+    <div id="error-message" class="error-message {% if error_type %}{{ error_type }}{% endif %}" 
+         {% if error %}style="display: block;"{% endif %}>
+      {% if error %}{{ error }}{% endif %}
+    </div>
+
+    <!-- Form field errors -->
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          {{ error }}<br>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form id="compare-form" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="file-section">
+        <label>Upload BOOM(X):</label>
+        {{ form.file1 }}
+
+        <label>KW(X):</label>
+        <input type="week" name="date1" id="id_date1" value="{{ date1_initial }}" class="form-control">
+      </div>
+
+      <div class="file-section">
+        <label>Upload BOOM(X-N):</label>
+        {{ form.file2 }}
+
+        <label>KW(X-N):</label>
+        <input type="week" name="date2" id="id_date2" value="{{ date2_initial }}" class="form-control">
+      </div>
+
+      <button type="submit">Compare Files</button>
+    </form>
+  </div>
+
+  <script src="{% static 'myApp/js/script.js' %}"></script>
+</body>
+</html>
