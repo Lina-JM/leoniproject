@@ -3,6 +3,8 @@ from django.urls import path
 from myApp import views  
 from django.conf import settings
 from django.conf.urls.static import static
+from myApp.views import FileUploadListAPIView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,6 +13,8 @@ urlpatterns = [
     path('delete/<int:upload_id>/', views.delete_upload, name='delete_upload'),  
     path('update/<int:upload_id>/', views.update_upload, name='update_upload'),
     path('download/<int:upload_id>/', views.download_output, name='download_output'),
+    path('api/uploads/', FileUploadListAPIView.as_view(), name='api-uploads'),
+   
 
 ]
 

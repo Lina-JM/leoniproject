@@ -13,6 +13,10 @@ from django.http import HttpResponse
 from django.utils.encoding import smart_str
 from django.contrib import messages
 from django.views.decorators.cache import never_cache 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import FileUploadSerializer
 
 def parse_week_string(week_str):
     try:
@@ -308,3 +312,17 @@ def download_output(request, upload_id):
     except Exception as e:
         messages.error(request, f"Error preparing file for download: {str(e)}")
         return redirect('upload_tables')
+    
+
+class FileUploadListAPIView(APIView):
+    def get(self, request):
+        uploads = FileUpload.objects.all().order_by('-id')
+        serializer = FileUploadSerializer(uploads, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = FileUploadSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
