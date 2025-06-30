@@ -144,4 +144,3 @@ import os
 
 MEDIA_URL = '/uploads/'  # This is the URL prefix
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')  # This is the actual folder path
-

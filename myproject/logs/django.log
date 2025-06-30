@@ -1,0 +1,23 @@
+INFO 2025-06-29 02:43:19,693 autoreload Watching for file changes with StatReloader
+WARNING 2025-06-29 02:43:23,722 log Not Found: /favicon.ico
+INFO 2025-06-29 20:11:14,038 autoreload Watching for file changes with StatReloader
+WARNING 2025-06-29 20:11:24,782 log Not Found: /favicon.ico
+INFO 2025-06-29 20:14:49,744 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\views.py changed, reloading.
+INFO 2025-06-29 20:14:50,789 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:14:56,290 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\views.py changed, reloading.
+INFO 2025-06-29 20:14:57,192 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:15:17,939 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\utils.py changed, reloading.
+INFO 2025-06-29 20:15:18,689 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:15:22,174 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\utils.py changed, reloading.
+INFO 2025-06-29 20:15:23,272 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:15:41,044 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\serializers.py changed, reloading.
+INFO 2025-06-29 20:15:42,050 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:15:54,135 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\serializers.py changed, reloading.
+INFO 2025-06-29 20:15:55,022 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:16:17,576 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\admin.py changed, reloading.
+INFO 2025-06-29 20:16:18,701 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:16:40,286 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\models.py changed, reloading.
+INFO 2025-06-29 20:16:41,087 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:17:01,785 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myApp\forms.py changed, reloading.
+INFO 2025-06-29 20:17:02,522 autoreload Watching for file changes with StatReloader
+INFO 2025-06-29 20:20:44,636 autoreload C:\Users\LENOVO\Desktop\leoniproject\myproject\myproject\settings.py changed, reloading.
