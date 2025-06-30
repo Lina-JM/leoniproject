@@ -22,17 +22,17 @@ class ExcelFileUploadForm(forms.ModelForm):
         self.fields['date1'].input_formats = ['%Y-W%W']
         self.fields['date2'].input_formats = ['%Y-W%W']
 
-    def clean_file1(self):
-        file = self.cleaned_data.get('file1')
+    def clean_file(self, file_field_name):
+        file = self.cleaned_data.get(file_field_name)
         if file and not file.name.endswith(('.xls', '.xlsx')):
             raise forms.ValidationError(mark_safe('<span style="color:red">BOOM(X-N) must be an Excel file (.xls or .xlsx)</span>'))
         return file
 
+    def clean_file1(self):
+        return self.clean_file('file1')
+
     def clean_file2(self):
-        file = self.cleaned_data.get('file2')
-        if file and not file.name.endswith(('.xls', '.xlsx')):
-            raise forms.ValidationError(mark_safe('<span style="color:red">BOOM(X-N) must be an Excel file (.xls or .xlsx)</span>'))
-        return file
+        return self.clean_file('file2')
 
     def clean(self):
         # Only file validation remains

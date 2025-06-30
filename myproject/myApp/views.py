@@ -83,11 +83,11 @@ def index(request):
     if request.method == 'POST':
         form = ExcelFileUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            file1 = request.FILES.get('file1')
-            file2 = request.FILES.get('file2')
-
+            
             try:
                 current_year = timezone.now().year
+                file1 = request.FILES.get('file1')
+                file2 = request.FILES.get('file2')
                 file1_week = extract_week_from_filename(file1.name) if file1 else None
                 file2_week = extract_week_from_filename(file2.name) if file2 else None
 
